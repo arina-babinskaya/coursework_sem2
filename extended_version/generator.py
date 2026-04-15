@@ -4,11 +4,28 @@ import os
 from analyzer import get_values, normalize_type
 
 def generate_arg_combinations(args):
-    value_lists = [get_values(arg["type"]) for arg in args]
-
-    if not value_lists:
+    if not args:
         return [[]]
-    return list(itertools.product(*value_lists))
+
+    base_values = []
+    all_values = []
+
+    for arg in args:
+        vals = get_values(arg["type"])
+        all_values.append(vals)
+        base_values.append(vals[0])  # fix base value
+
+    combinations = []
+
+    combinations.append(tuple(base_values))
+
+    for i, vals in enumerate(all_values):
+        for v in vals[1:]:
+            combo = list(base_values)
+            combo[i] = v
+            combinations.append(tuple(combo))
+
+    return combinations
 
 
 def generate_assert(return_type: str) -> str:
@@ -92,12 +109,11 @@ def generate_case_name(args, values):
         elif val in {"-1", "-1.0"}:
             parts.append(f"{name}Negative")
         
-        elif val in {str(2**15 - 1), str(2**31 - 1), str(2**63 - 1), "3.4e38", "1.7e308"}:
+        elif val in {str(2**15 - 1), str(2**31 - 1), str(2**63 - 1), "3.4e38", "1.7e308", str(2**16 - 1), str(2**32 - 1),str(2**64 - 1), "'\\x7F'", '"' + 'a'*1000 + '"'}:
             parts.append(f"{name}Max_Val")
         elif val in {str(-2**15), str(-2**31), str(-2**63), "-3.4e38", "-1.7e308"}:
             parts.append(f"{name}Min_Val")
-# пока не трогаю char и string
-# ВАЖНО: нужно будет учесть, что long long * long long по размеру больше просто long long
+# ВАЖНО: нужно будет учесть, что long long * long long по размеру больше просто long long  == руками
 
         elif val == "true":
             parts.append(f"{name}True")
@@ -113,7 +129,6 @@ def generate_case_name(args, values):
             parts.append(f"{name}Val")
 
     return "_".join(parts)
-# TO DO: add edge cases!!!!
 
 def format_test_suite_name(func_name: str) -> str:
     return func_name[0].upper() + func_name[1:] + "_Test"

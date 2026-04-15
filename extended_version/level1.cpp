@@ -1,6 +1,6 @@
 // at this point, we do not need realization of function - only names and types
 
-// Простейшие арифметические операции
+
 int add(int a, int b);
 float subtract(float a, float b);
 unsigned int multiply(unsigned int a, unsigned int b);
