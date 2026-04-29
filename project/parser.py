@@ -60,7 +60,7 @@ class CppParser:
             if node.kind in [CursorKind.CLASS_DECL, CursorKind.STRUCT_DECL] and self._is_from_main_file(node):
                 result.append(node)
 
-        self._visit(self.tu, callback)
+        self._visit(self.tu.cursor, callback)
         return result
 
     # Cursor -> dict
