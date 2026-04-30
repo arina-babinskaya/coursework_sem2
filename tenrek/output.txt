@@ -1,0 +1,85 @@
+=== AST ===
+CursorKind.TRANSLATION_UNIT | /Users/arinababinskaya/Documents/GitHub/coursework_sem2/project/test_file.cpp
+  CursorKind.FUNCTION_DECL | foo
+    CursorKind.PARM_DECL | x
+    CursorKind.COMPOUND_STMT | 
+      CursorKind.DECL_STMT | 
+        CursorKind.VAR_DECL | check_logic
+          CursorKind.LAMBDA_EXPR | 
+            CursorKind.PARM_DECL | val
+            CursorKind.COMPOUND_STMT | 
+              CursorKind.IF_STMT | 
+                CursorKind.BINARY_OPERATOR | 
+                  CursorKind.BINARY_OPERATOR | 
+                    CursorKind.BINARY_OPERATOR | 
+                      CursorKind.UNEXPOSED_EXPR | val
+                        CursorKind.DECL_REF_EXPR | val
+                      CursorKind.INTEGER_LITERAL | 
+                    CursorKind.BINARY_OPERATOR | 
+                      CursorKind.UNEXPOSED_EXPR | val
+                        CursorKind.DECL_REF_EXPR | val
+                      CursorKind.INTEGER_LITERAL | 
+                  CursorKind.BINARY_OPERATOR | 
+                    CursorKind.UNEXPOSED_EXPR | val
+                      CursorKind.DECL_REF_EXPR | val
+                    CursorKind.INTEGER_LITERAL | 
+                CursorKind.COMPOUND_STMT | 
+                  CursorKind.RETURN_STMT | 
+                    CursorKind.BINARY_OPERATOR | 
+                      CursorKind.UNEXPOSED_EXPR | val
+                        CursorKind.DECL_REF_EXPR | val
+                      CursorKind.INTEGER_LITERAL | 
+              CursorKind.RETURN_STMT | 
+                CursorKind.UNEXPOSED_EXPR | val
+                  CursorKind.DECL_REF_EXPR | val
+      CursorKind.IF_STMT | 
+        CursorKind.BINARY_OPERATOR | 
+          CursorKind.UNEXPOSED_EXPR | x
+            CursorKind.DECL_REF_EXPR | x
+          CursorKind.INTEGER_LITERAL | 
+        CursorKind.COMPOUND_STMT | 
+          CursorKind.IF_STMT | 
+            CursorKind.BINARY_OPERATOR | 
+              CursorKind.UNEXPOSED_EXPR | x
+                CursorKind.DECL_REF_EXPR | x
+              CursorKind.INTEGER_LITERAL | 
+            CursorKind.COMPOUND_STMT | 
+              CursorKind.RETURN_STMT | 
+                CursorKind.BINARY_OPERATOR | 
+                  CursorKind.CALL_EXPR | operator()
+                    CursorKind.UNEXPOSED_EXPR | check_logic
+                      CursorKind.DECL_REF_EXPR | check_logic
+                    CursorKind.UNEXPOSED_EXPR | operator()
+                      CursorKind.DECL_REF_EXPR | operator()
+                    CursorKind.UNEXPOSED_EXPR | x
+                      CursorKind.DECL_REF_EXPR | x
+                  CursorKind.INTEGER_LITERAL | 
+          CursorKind.RETURN_STMT | 
+            CursorKind.CALL_EXPR | operator()
+              CursorKind.UNEXPOSED_EXPR | check_logic
+                CursorKind.DECL_REF_EXPR | check_logic
+              CursorKind.UNEXPOSED_EXPR | operator()
+                CursorKind.DECL_REF_EXPR | operator()
+              CursorKind.UNEXPOSED_EXPR | x
+                CursorKind.DECL_REF_EXPR | x
+      CursorKind.RETURN_STMT | 
+        CursorKind.INTEGER_LITERAL | 
+  CursorKind.FUNCTION_DECL | bar
+    CursorKind.COMPOUND_STMT | 
+      CursorKind.FOR_STMT | 
+        CursorKind.DECL_STMT | 
+          CursorKind.VAR_DECL | i
+            CursorKind.INTEGER_LITERAL | 
+        CursorKind.BINARY_OPERATOR | 
+          CursorKind.UNEXPOSED_EXPR | i
+            CursorKind.DECL_REF_EXPR | i
+          CursorKind.INTEGER_LITERAL | 
+        CursorKind.UNARY_OPERATOR | 
+          CursorKind.DECL_REF_EXPR | i
+        CursorKind.COMPOUND_STMT | 
+      CursorKind.RETURN_STMT | 
+        CursorKind.INTEGER_LITERAL | 
+
+=== FUNCTIONS ===
+{'name': 'foo', 'start_line': 3, 'end_line': 18, 'args_count': 1}
+{'name': 'bar', 'start_line': 20, 'end_line': 23, 'args_count': 0}
