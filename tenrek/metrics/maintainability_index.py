@@ -1,4 +1,4 @@
-from metrics.halstead.halstead_volume import calculate as volume
+from tenrek.metrics.halstead.halstead_volume import calculate as volume
 from .cyclomatic import calculate as cc
 from .loc import calculate as loc
 import math

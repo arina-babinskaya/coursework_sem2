@@ -2,7 +2,6 @@ coursework_sem2/
  ├── README.md
  ├── requirements.txt  
  ├── .venv
- ├── .venv
  ├── project/
  │    ├── parser.py
  │    ├── json_generator.py  

@@ -1,22 +1,23 @@
-from metrics import cyclomatic
-from metrics import cognitive_complexity
-from metrics import nesting
-from metrics import loc
-from metrics import nloc
-from metrics.for_classes import god_class
-from metrics import longest_string
-from metrics import average_string_lenght
-from metrics import maintainability_index
-from metrics.halstead import halstead_uniq_elements
-from metrics.halstead import halstead_all_elements
-from metrics.halstead import halstead_volume
-from metrics.halstead import halstead_difficulty
-from metrics.halstead import halstead_effort
-from metrics.halstead import halstead_time
+from tenrek.metrics import cyclomatic
+from tenrek.metrics import cognitive_complexity
+from tenrek.metrics import nesting
+from tenrek.metrics import loc
+from tenrek.metrics import nloc
+from tenrek.metrics.for_classes import god_class
+from tenrek.metrics import longest_string
+from tenrek.metrics import average_string_lenght
+from tenrek.metrics import maintainability_index
+from tenrek.metrics.halstead import halstead_uniq_elements
+from tenrek.metrics.halstead import halstead_all_elements
+from tenrek.metrics.halstead import halstead_volume
+from tenrek.metrics.halstead import halstead_difficulty
+from tenrek.metrics.halstead import halstead_effort
+from tenrek.metrics.halstead import halstead_time
 
 class ComplexityAnalyzer:
-    def __init__(self, parser):
+    def __init__(self, parser, standard: str = "cpp17"):
         self.parser = parser
+        self.standard = standard
 
     def analyze(self):
         results = []

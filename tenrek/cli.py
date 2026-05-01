@@ -2,78 +2,84 @@ import typer
 from pathlib import Path
 from rich.console import Console
 from rich.table import Table
-from rich.panel import Panel
-import os
-from typing import List, Optional
-from enum import Enum
+from typing import Literal
 
 
-# Инициализация Typer и Rich
-app = typer.Typer(rich_markup_mode="rich")
+app = typer.Typer(help="Tenrek is C++ code complexity analyzer tool")
 console = Console()
 
-# Перечисление для стандартов C++
-class CppStandard(str, Enum):
-    cpp11 = "c++11"
-    cpp14 = "c++14"
-    cpp17 = "c++17"
-    cpp20 = "c++20"
-    cpp23 = "c++23"
 
-@app.command()
-def analyze(
-    paths: List[Path] = typer.Argument(
-        ..., 
-        help="Список файлов или папок для анализа."
-    ),
-    standard: Optional[CppStandard] = typer.Option(
-        None, 
-        "--std", 
-        help="Стандарт C++ для парсера."
-    )
-):
-    """
-    [bold green]Программа для статического анализа C++ кода.[/bold green]
-    Позволяет рассчитать метрики сложности, LOC, Halstead и индекс поддерживаемости.
-    """
-    console.print(Panel("[bold cyan]Запуск анализа проекта[/bold cyan]", expand=False))
+def make_clang_args(standard: str):
+    return [f"-std=c++{standard[-2:]}"]
 
-    valid_paths = []
-    
-    # 1. Проверка существования файлов и папок
-    for path in paths:
-        if not path.exists():
-            console.print(f"[bold red]Ошибка:[/bold red] Путь '{path}' не существует!", style="red")
-            continue
-        valid_paths.append(path)
-        
-    if not valid_paths:
-        console.print("[bold red]Критическая ошибка:[/bold red] Не указано ни одного валидного пути для анализа.")
-        raise typer.Exit(code=1)
 
-    # 2. Вывод выбранных параметров в виде таблицы Rich
-    table = Table(title="Параметры запуска", title_style="bold magenta")
-    table.add_column("Параметр", style="cyan")
-    table.add_column("Значение", style="green")
+def analyze_file(path: Path, standard: str):
+    from tenrek.parser import CppParser
+    from tenrek.analyzer import ComplexityAnalyzer
 
-    # Форматируем список путей для красивого вывода
-    paths_str = "\n".join([str(p.resolve()) for p in valid_paths])
-    table.add_row("Объекты анализа", paths_str)
-    table.add_row("Стандарт C++", standard.value if standard else "[yellow]По умолчанию[/yellow]")
+    parser = CppParser(path, standard=standard)
+    parser.parse()
+
+    analyzer = ComplexityAnalyzer(parser, standard=standard)
+    return analyzer.analyze()
+
+
+def show_result(result: list):
+    table = Table(title="Analysis Result")
+
+    table.add_column("Name", style="cyan")
+    table.add_column("Type")
+    table.add_column("Metric")
+    table.add_column("Value", style="magenta")
+
+    for item in result:
+        name = item.get("name", "")
+        typ = item.get("type", "")
+
+        for key, value in item.items():
+            if key in ["name", "type"]:
+                continue
+            table.add_row(name, typ, key, str(value))
 
     console.print(table)
 
-    # 3. Здесь вы вызываете функции из вашего analyzer.py или parser.py
-    with console.status("[bold blue]Выполняется анализ кода...[/bold blue]"):
-        # Имитация работы
-        import time
-        time.sleep(1.5) 
-        
-        # Пример интеграции с вашим кодом:
-        # from analyzer import run_analysis
-        # run_analysis(paths=valid_paths, cpp_std=standard.value if standard else "c++17")
 
-    console.print("\n[bold green]🎉 Анализ успешно завершен![/bold green]")
+def show_multiple(results: list):
+    for res in results:
+        show_result(res)
 
-if __name__ == "__main__":
-    app()
+
+@app.command()
+def file(
+    path: Path = typer.Argument(..., exists=True),
+    standard: Literal["cpp11", "cpp14", "cpp17", "cpp20", "cpp23"] = typer.Option(
+        "cpp17", "--standard", help="C++ standard"
+    ),
+):
+    """
+    Analyze single file
+    """
+    console.print(f"[bold green]Analyzing file:[/bold green] {path}")
+
+    result = analyze_file(path, standard)
+
+    show_result(result)
+
+@app.command()
+def folder(
+    path: Path = typer.Argument(..., exists=True),
+    standard: Literal["cpp17", "cpp20", "cpp23"] = typer.Option(
+        "cpp17", "--standard", help="C++ standard"
+    ),
+):
+    """
+    Analyze folder
+    """
+    console.print(f"[bold blue]Analyzing folder:[/bold blue] {path}")
+
+    results = []
+
+    for file in path.rglob("*.cpp"):
+        results.append(analyze_file(file, standard))
+
+    show_multiple(results)

@@ -3,11 +3,21 @@ from clang.cindex import CursorKind
 from pathlib import Path
 
 class CppParser:
-    def __init__(self, filename: str, clang_args=None):
+    def __init__(self, filename: str, standard: str = "cpp17", clang_args=None):
         self.filename = str(Path(filename).resolve())
         self.index = cindex.Index.create()
-        self.clang_args = clang_args or [ "-std=c++17" ]
+        self.standard = standard
+        self.clang_args = clang_args or self._make_clang_args(standard)
         self.tu = None #tu - translation_unit
+
+
+    def _make_clang_args(self, standard: str):
+        if not standard.startswith("cpp"):
+            raise ValueError(f"Invalid standard: {standard}")
+
+        version = standard.replace("cpp", "")
+        return [f"-std=c++{version}"]
+
 
     #main parser
     def parse(self):
