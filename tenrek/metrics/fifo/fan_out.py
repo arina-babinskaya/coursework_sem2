@@ -2,7 +2,7 @@ from clang.cindex import CursorKind
 from .fifo_help_functions import get_all_types_from_type, walk
 
 
-# количество внешних типов, от которых зависит данный класс
+# the number of external types on which this class depends
 def calculate(source_class, parser):
     source_name = source_class.spelling
     used = set()

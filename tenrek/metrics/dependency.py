@@ -1,5 +1,5 @@
 from clang.cindex import CursorKind
-from file_dependency import calculate as file_calc
+from tenrek.metrics.file_dependency import calculate as file_calc
 # CBO (Coupling Between Objects)
 
 
@@ -7,7 +7,7 @@ def calculate(node):
     includes = set()
     types = set()
 
-    tu = node.translation_unit  # not just node.tu?
+    tu = node.translation_unit 
 
     file_result = file_calc(node)
     includes.update(file_result["include_list"])

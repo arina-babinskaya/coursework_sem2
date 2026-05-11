@@ -30,31 +30,19 @@ class MetricEvaluator:
     """
 
     LOWER_IS_BETTER = {
-        # Function / method metrics
         "cyclomatic": Threshold(10, 20),
-        # Sonar: 15 default, для C/C++ часто терпимее; 25 — граница warning, 40 — action.
         "cognitive_complexity": Threshold(25, 40),
         "nesting": Threshold(3, 5),
-        # LOC/NLOC лучше держать заметно ниже старых 50/150.
         "loc": Threshold(40, 80),
         "nloc": Threshold(30, 60),
         "args_count": Threshold(4, 7),
-
-        # Style/readability
         "longest_string": Threshold(100, 140),
-        "average_string_length": Threshold(80, 100),  # оставлено имя из analyzer.py
-
-        # Coupling
+        "average_string_length": Threshold(80, 100),
         "fan_in": Threshold(10, 30),
         "fan_out": Threshold(7, 14),
-
-        # Class metrics
         "god_class": Threshold(20, 40),
         "lcom1": Threshold(10, 25),
-        # LCOM4: 1 = связный класс; 2–3 = подозрительно; >3 = стоит делить.
         "lcom4": Threshold(1, 3),
-
-        # Halstead: использовать как сигнал размера/трудности, а не единственный критерий.
         "halstead_uniq_elements": Threshold(40, 80),
         "halstead_all_elements": Threshold(150, 400),
         "halstead_volume": Threshold(1000, 4000),

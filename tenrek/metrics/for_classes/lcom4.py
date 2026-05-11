@@ -43,7 +43,6 @@ def calculate(class_cursor):
         field_usage[key] = collect_used_fields(method, class_fields)
         calls[key] = collect_called_methods(method, method_keys)
 
-    # Graph adjacency list
     graph = {k: set() for k in method_keys}
 
     for i in range(len(method_keys)):
@@ -53,11 +52,9 @@ def calculate(class_cursor):
 
             connected = False
 
-            # shared fields
             if field_usage[m1] & field_usage[m2]:
                 connected = True
 
-            # method calls
             elif m2 in calls[m1] or m1 in calls[m2]:
                 connected = True
 

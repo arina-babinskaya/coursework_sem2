@@ -1,16 +1,14 @@
 tenrek/
  ├── README.md
- ├── requirements.txt  
+ ├── .gitignore 
  ├── LICENSE
  ├── poerty.lock
  ├── pyproject.toml
  ├── tenrek/
  │    ├── parser.py
- │    ├── json_generator.py  
- │    ├── test_file.cpp
- │    ├── analyzer.py
- │    ├── evaluator.py
  │    ├── folder_parser.py
+ │    ├── evaluator.py
+ │    ├── analyzer.py 
  │    ├── metrics/
  │    │     ├── cyclomatic.py
  │    │     ├── cognitive_complexity.py
@@ -28,3 +26,33 @@ tenrek/
  │    │          ├── halstead_difficulty.py
  │    │          ├── halstead_effort.py
  │    │          └── halstead_time.py
+
+
+
+
+
+
+
+tenrek/
+ ├── README.md
+ ├── .gitignore 
+ ├── LICENSE
+ ├── poerty.lock
+ ├── pyproject.toml
+ ├── pytests/
+ ├── tenrek/
+ │    ├── parser.py
+ │    ├── folder_parser.py
+ │    ├── evaluator.py
+ │    ├── analyzer.py 
+ │    ├── metrics/
+ │    │     ├── cyclomatic.py
+ │    │     ├── cognitive_complexity.py
+ │    │     ├── nesting.py
+ │    │     ├── loc.py
+ │    │     ├── nloc.py
+ │    │     ├── longest_string.py
+ │    │     ├── average_string_lenght.py
+ │    │     ├── maintainability_index.py
+ │    │     └── halstead /
+

@@ -29,7 +29,7 @@ def get_all_types_from_type(t):
     return names
 
 
-# Использует ли другой класс target_name
+# does another class use target_name
 def class_uses_type(clas, target_name): 
     for node in walk(clas):
         if node.kind == CursorKind.FIELD_DECL:
@@ -47,7 +47,7 @@ def class_uses_type(clas, target_name):
     return False
 
 
-# Использует ли функция/метод target_name
+# does function/method use target_name
 def callable_uses_type(func, target_name):
     for arg in func.get_arguments():
         if target_name in get_all_types_from_type(arg.type):
